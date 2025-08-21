@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt-get -y install git pkg-config build-essential qt5-qmake \
+          sudo apt-get -y install git pkg-config build-essential fuse libfuse2 qt5-qmake \
             libvorbis-dev zlib1g-dev libhunspell-dev x11proto-record-dev \
             qtdeclarative5-dev qtwebengine5-dev libxtst-dev liblzo2-dev libbz2-dev \
             libao-dev libavutil-dev libavformat-dev libswresample-dev libtiff5-dev libeb16-dev \
@@ -44,8 +44,10 @@ jobs:
           unset QT_PLUGIN_PATH
           unset LD_LIBRARY_PATH
           mkdir -p appdir/usr/lib/
-          cp /lib/x86_64-linux-gnu/libssl.so.1.0.0 appdir/usr/lib/ || true
-          cp /lib/x86_64-linux-gnu/libcrypto.so.1.0.0 appdir/usr/lib/ || true
+          cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 appdir/usr/lib/ || \
+            cp /usr/lib/x86_64-linux-gnu/libssl.so.3 appdir/usr/lib/ || true
+          cp /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 appdir/usr/lib/ || \
+            cp /usr/lib/x86_64-linux-gnu/libcrypto.so.3 appdir/usr/lib/ || true
           ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
 
       - name: Inspect linked libraries
