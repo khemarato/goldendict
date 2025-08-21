@@ -51,7 +51,7 @@ jobs:
           find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
 
       - name: Upload AppImage artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: GoldenDict-AppImage
           path: GoldenDict*.AppImage*
